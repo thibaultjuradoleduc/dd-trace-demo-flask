@@ -53,10 +53,10 @@ dictConfig({
 
 ## Connecting MySQL
 mydb = mysql.connector.connect(
-    host=db_host,
-    user=db_username,
-    passwd=db_password,
-    database=db_name
+    host=db_config.db_host,
+    user=db_config.db_username,
+    passwd=db_config.db_password,
+    database=db_config.db_name
 )
 mycursor = mydb.cursor()
 
