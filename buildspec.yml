@@ -1,0 +1,21 @@
+version: 0.2
+
+env:
+  variables:
+    DB_HOST: "<DB_HOST>"
+    DB_USERNAME: "<DB_USERNAME>"
+    DB_PASSWORD: "<DB_PASSWORD>"
+    DB_NAME: "<DB_NAME>"
+ 
+phases:
+  install:
+    commands:
+      - pip install -r requirements.txt
+  build:
+    commands:
+      - python flask_dd_trace.py
+artifacts:
+  files:
+    - flask_dd_trace.py
+    - db_conf.py
+    - requirements.txt
