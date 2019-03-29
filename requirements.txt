@@ -1,0 +1,5 @@
+flask
+blinker
+mysql.connector
+ddtrace
+datadog
