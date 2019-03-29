@@ -10,12 +10,16 @@ import json
 
 from logging.config import dictConfig
 
+# Datadog Trace
 from ddtrace import tracer
 from ddtrace.contrib.flask import TraceMiddleware
 from ddtrace import Pin, patch, patch_all
 
 # DogStatsD
 from datadog import statsd
+
+# DB Config
+import db_config
 
 patch_all(logging=True, mysql=True, flask=False)
 
@@ -49,10 +53,10 @@ dictConfig({
 
 ## Connecting MySQL
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="python",
-    passwd="password",
-    database="kikeyama"
+    host=db_host,
+    user=db_username,
+    passwd=db_password,
+    database=db_name
 )
 mycursor = mydb.cursor()
 
