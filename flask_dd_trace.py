@@ -37,12 +37,12 @@ dictConfig({
     'formatters': {'default': {
         'format': FORMAT,
     }},
-    'console': {
+    'handlers': {'console': {
         'class': 'logging.StreamHandler',
         'level': 'INFO',
         'formatter': 'default',
-        'stream': 'ext://sys.stdout',
-    },
+        'stream': 'ext://sys.stdout'
+    }},
     'root': {
         'level': 'DEBUG',
         'handlers': ['file']
