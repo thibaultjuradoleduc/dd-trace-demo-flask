@@ -45,7 +45,7 @@ dictConfig({
     }},
     'root': {
         'level': 'DEBUG',
-        'handlers': ['file']
+        'handlers': ['console']
     }
 })
 
