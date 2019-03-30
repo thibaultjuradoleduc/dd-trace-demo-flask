@@ -37,11 +37,12 @@ dictConfig({
     'formatters': {'default': {
         'format': FORMAT,
     }},
-    'handlers': {'file': {
-        'class': 'logging.handlers.RotatingFileHandler',
-        'filename': '/var/log/flask_dd_trace.log',
-        'formatter': 'default'
-    }},
+    'console': {
+        'class': 'logging.StreamHandler',
+        'level': 'INFO',
+        'formatter': 'default',
+        'stream': 'ext://sys.stdout',
+    },
     'root': {
         'level': 'DEBUG',
         'handlers': ['file']
