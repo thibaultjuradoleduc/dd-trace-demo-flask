@@ -76,6 +76,7 @@ def api_entry():
     app.logger.info('getting root endpoint')
 #    return 'Entrypoint to the Application'
     name = flask_request.args.get('name', str)
+    tracer.set_tags({'name': name})
     mycursor.execute("SELECT Name, UUID, Number FROM kikeyama_table where name='%s'" % name)
     myresult = mycursor.fetchall()
     
