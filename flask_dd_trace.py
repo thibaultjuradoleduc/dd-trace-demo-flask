@@ -98,6 +98,11 @@ def trace_endpoint():
     app.logger.info('getting trace endpoint')
     return 'Posting Traces'
 
+@app.route('/api/post', methods=['POST'])
+def post_endpoint():
+    app.logger.info('posting message: ' + flask_request.form['message'])
+    return flask_request.form['message']
+
 if __name__ == '__main__':
     app.logger.info('%(message)s This is __main__ log')
     app.run(host='0.0.0.0', port='5050')
