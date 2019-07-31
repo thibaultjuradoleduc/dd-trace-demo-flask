@@ -115,7 +115,7 @@ def lambda_endpoint():
     r = requests.get('https://8m92rdlm25.execute-api.us-east-1.amazonaws.com/demo/lambda', params=q)
     dict_r = json.loads(r.text)
     if dict_r['ResponseMetadata']['HTTPStatusCode'] == 200:
-        app.logger.info('Returned ' + dict_r['Count'] + ' results with RequestId: ' + dict_r['ResponseMetadata']['RequestId'])
+        app.logger.info('lambda call: Returned ' + str(dict_r['Count']) + ' results with RequestId: ' + dict_r['ResponseMetadata']['RequestId'])
     return 'Lambda Traces'
 
 if __name__ == '__main__':
