@@ -3,3 +3,4 @@ blinker
 mysql-connector
 ddtrace
 datadog
+requests
