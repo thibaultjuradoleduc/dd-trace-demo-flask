@@ -12,6 +12,7 @@ import requests
 from logging.config import dictConfig
 
 # Datadog Trace
+import ddtrace
 from ddtrace import tracer
 from ddtrace.contrib.flask import TraceMiddleware
 from ddtrace import Pin, patch, patch_all
