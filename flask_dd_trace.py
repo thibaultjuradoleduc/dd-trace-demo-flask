@@ -7,6 +7,7 @@ import time
 
 import mysql.connector
 import json
+import requests
 
 from logging.config import dictConfig
 
@@ -69,6 +70,9 @@ app = Flask(__name__)
 #traced_app = TraceMiddleware(app, tracer, service="kikeyama_service", distributed_tracing=False)
 traced_app = TraceMiddleware(app, tracer, service='kikeyama_service')
 
+# Enable distributed tracing
+app['datadog_trace']['distributed_tracing_enabled'] = True
+
 @app.route('/')
 def api_entry():
     start_time = time.time()
@@ -102,6 +106,16 @@ def trace_endpoint():
 def post_endpoint():
     app.logger.info('posting message: ' + flask_request.form['message'])
     return flask_request.form['message']
+
+@app.route('/lambda')
+def lambda_endpoint():
+    app.logger.info('getting lambda endpoint')
+    q = {'TableName': 'kikeyama-dynamodb'}
+    r = requests.get('https://8m92rdlm25.execute-api.us-east-1.amazonaws.com/demo/lambda', params=q)
+    dict_r = json.loads(r.text)
+    if dict_r['ResponseMetadata']['HTTPStatusCode'] == 200:
+        app.logger.info('Returned ' + dict_r['Count'] + ' results with RequestId: ' + dict_r['ResponseMetadata']['RequestId'])
+    return 'Lambda Traces'
 
 if __name__ == '__main__':
     app.logger.info('%(message)s This is __main__ log')
