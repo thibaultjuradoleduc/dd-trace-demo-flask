@@ -69,7 +69,7 @@ Pin.override(mydb, service='kikeyama_mysql')
 ## Flask
 app = Flask(__name__)
 #traced_app = TraceMiddleware(app, tracer, service="kikeyama_service", distributed_tracing=False)
-#traced_app = TraceMiddleware(app, tracer, service='kikeyama_service')
+traced_app = TraceMiddleware(app, tracer, service='kikeyama_service')
 
 # Enable distributed tracing
 ddtrace.config.flask['distributed_tracing_enabled'] = True
