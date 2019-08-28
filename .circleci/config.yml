@@ -8,48 +8,44 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:3.6.1
+      - image: 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:latest
+        aws_auth:
+          aws_access_key_id: $AWS_ACCESS_KEY_ID
+          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/postgres:9.4
-
-    working_directory: ~/repo
+    working_directory: ~/dd-trace-demo-flask
 
     steps:
       - checkout
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
+#      - restore_cache:
+#          keys:
+#            - v1-dependencies-{{ checksum "requirements.txt" }}
+#            # fallback to using the latest cache if no exact match is found
+#            - v1-dependencies-
+#
+      - run:
+          name: docker-build
+          command: |
+            docker build -t 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:latest .
 
       - run:
-          name: install dependencies
+          name: docker-tag
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt
+            docker tag 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:latest 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:$CIRCLE_BRANCH
 
-      - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-      # run tests!
-      # this example uses Django's built-in test-runner
-      # other common Python testing frameworks include pytest and nose
-      # https://pytest.org
-      # https://nose.readthedocs.io
       - run:
-          name: run tests
+          name: docker-push-latest
           command: |
-            . venv/bin/activate
-            python manage.py test
+            docker push 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:latest
 
-      - store_artifacts:
-          path: test-reports
-          destination: test-reports
+      - run:
+          name: docker-push-buildtag
+          command: |
+            docker push 172597598159.dkr.ecr.us-east-1.amazonaws.com/kikeyama-dd-trace-demo-flask-circleci:$CIRCLE_BRANCH
+
+#      - save_cache:
+#          paths:
+#            - ./venv
+#          key: v1-dependencies-{{ checksum "requirements.txt" }}
