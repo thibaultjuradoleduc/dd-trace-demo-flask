@@ -2,9 +2,9 @@ FROM python:3
 ADD flask_dd_trace.py /
 ADD db_config.py /
 ADD requirements.txt /
-ENV DB_HOST <DB_HOST>
-ENV DB_USERNAME <DB_USERNAME>
-ENV DB_PASSWORD <DB_PASSWORD>
-ENV DB_NAME <DB_NAME>
+ENV DB_HOST mysql
+ENV DB_USERNAME demo
+ENV DB_PASSWORD demo
+ENV DB_NAME demo
 RUN pip install -r requirements.txt
 CMD [ "python", "./flask_dd_trace.py" ]
