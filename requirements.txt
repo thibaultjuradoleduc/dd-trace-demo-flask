@@ -1,6 +1,6 @@
 flask
 blinker
-mysql-connector
+mysql-connector-python
 ddtrace
 datadog
 requests
